@@ -96,6 +96,8 @@ filmes %>%
 
 ## Nem sempre bilheteria é sinônimo de boas avaliações !!
 
+Ao analisarmos o valor apróximado das bilheterias por ano, e compararmos com o valor aproximado das avaliações por ano, podemos perceber que nem sempre uma bilheteria muito alta significa dizer que o filme foi muito bom. Em 2010 a bilheteria dos filmes estrelados por Depp foram altíssimas, nesta época os filmes Alice no país das Maravilhas e O turista eram lançados. Entretanto as avaliaçoes medianas deles não refletiram na bilheteria que tiveram. Uma possível explicação para esta situação é que os fãs da literatura de Alice estavam bastante anciosos para terem a história recontada e atualizada nas telonas do cinema, a ponto de que qualquer deslize seria o suficiente para diminuir a nota de avaliação. Outra pssível justificativa é que talvez o filme tenha sido ruim mesmo. Cabe ao cinelunático julgar.
+
 ```{r}
 bilheteria_ano = filmes %>% 
     group_by(ano) %>% 
@@ -115,13 +117,18 @@ p2 = avaliacao_ano %>%
     geom_line(color=paleta[2])+
     geom_point(color="red")
 
+filmes %>% 
+    filter(ano == 2010) %>%
+    select(filme) %>% 
+    glimpse()
+
 ggplotly(p)
 ggplotly(p2)
 
 ```
 
 
-## Estrutura de grupos?
+# Como posso agrupar os filmes do Depp em categorias?
 
 ```{r}
 m_transformado = filmes %>% 
