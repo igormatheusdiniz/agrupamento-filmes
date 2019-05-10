@@ -39,7 +39,17 @@ import_data("johnny_depp")
 filmes = read_imported_data()
 ```
 
-## Descrição
+# Descrição do Ator
+
+Johnny Depp é um ator, músico, produtor de cinema e diretor americano muito conhecido por interpretar grandes personangens como o Capitão Jack Sparrow na franquia Piratas do Caribe, Edward Scissorhands do filme Edward mãos de tesoura, além de interpretar outros personagens famosos, como o bruxo das trevas Gellert Grindelwald em Animais Fantásticos e Onde Habitam, de 2016, e Animais Fantásticos: Os Crimes de Grindelwald de 2018, Willy Wonka em A Fantástica Fábrica de Chocolate e o Chapeleiro Maluco nos filmes Alice no País das Maravilhas e Alice através do Espelho.
+
+Seus filmes de maior bilheteria foram a série Piratas do Caribe com um total de 4.524 bilhões de dólares, seguido pela franquia Animais Fantásticos e Onde Habitam com 1.457 bilhão, Alice no País das Maravilhas com 1.323 bilhão em receita global.Trata-se de um ator renomadisímo de Hollywood, com mais de 250 indicações a prêmios por seu trabalho, incluindo Oscars, Globo de Ouro e Screen Actors Guild. 
+
+Depp é um dos maiores e mais bem sucedidos atores de sua geração, juntamente com Brad Pitt, Will Smith, Robert Downey Jr., Tom Cruise e Leonardo DiCaprio. o artista conta com uma imensidão de filmes em seu currículo. Aqui neste post trabalhamos com uma amostra de 29 filmes coletados pelo Rotten Tomatoes. 
+
+## Bilheteria por ano
+
+Podemos perceber que a maioria dos filmes alcançaram uma bilheteria até 200 milhoes de dólares. Mas não foram poucos os filmes que despontaram em bilheteria, a frânquia de Piratas do caribe, rendeu uma boa grana ao Capitão Jack Sparrow. 
 
 ```{r}
 
@@ -51,20 +61,34 @@ ggplotly(p)
 
 ```
 
-
+O gráfico abaixo reforça a ideia de que a maioria dos filmes estrelados por Johnny Depp não obteve tanto sucesso quanto a frânquia de Piratas do caribe. O único filme que chegou próximo foi, Alice no país das maravilhas. Algo a ser considerado nesta base de dados é que o filme mais recente analisado é de 2017 e que de lá pra cá o Ator ja estrelou em outros grandes filmes que renderam bilheterias estrondosas, como por exemplo: ALICE ATRAVÉS DO ESPELHO e ANIMAIS FANTÁSTICOS E ONDE HABITAM.
 
 ```{r}
 filmes %>% 
     ggplot(aes(x = bilheteria)) + 
-    geom_histogram(binwidth = 15, fill = paleta[4], color = "white") 
+    geom_histogram(binwidth = 15, fill = paleta[4], color = "white")+
+    ylab("Quantidade")
 ```
+
+## E a avaliação geral dos filmes ???
+
+Levando em consideração uma escala de 0-100, 18 dos 29 filmes citados em nossa base de dados tiveram uma avaliação positiva (considerando que positivo seria uma avaliação acima de 5). O filme com a melhor avaliação foi Deep Sea, seguido de GOnzo e Rango, que não foram filmes que renderam uma bilheteria muito alta, mas pra quem foi e assistiu, podemos ter certeza que não se arrependeram.
 
 ```{r}
 filmes %>% 
+    ggplot(aes(x = reorder(filme,avaliacao), y=avaliacao, fill = paleta[4], color = "white")) + 
+    geom_point(show.legend = FALSE)+
+    coord_flip()+
+    labs(x="Filme", y="Avaliação")
+
+filmes %>% 
     ggplot(aes(x = avaliacao)) + 
     geom_histogram(binwidth = 10, boundary = 0, fill = paleta[4], color = "white") + 
-    geom_rug(size = .5) 
+    geom_rug(size = .5)+
+    ylab("Quantidade")
 ```
+
+## Nem sempre bilheteria é sinônimo de boas avaliações !!
 
 ```{r}
 bilheteria_ano = filmes %>% 
@@ -115,13 +139,14 @@ plot_clusgap = function(clusgap, title = "Gap Statistic calculation results") {
 
 ```{r}
 gaps <- m_transformado %>% 
-    select(bilheteria_log, avaliacao_scaled) %>% 
+    select(bilheteria_log, avaliacao) %>% 
     clusGap(FUN = kmeans, nstart = 20, K.max = 8, B = 200)
 
 plot_clusgap(gaps)
 ```
 
 ```{r}
+set.seed(12345)
 n_clusters = 5
 
 # O agrupamento de fato:
@@ -136,17 +161,18 @@ agrupado = cluster %>%
 #    ggplot(aes(x = avaliacao_scaled, y = bilheteria_log, color = .cluster))  + 
 #    geom_point(size = 3)
 
-agrupado %>% 
-    ggplot(aes(x = avaliacao, y = bilheteria, color = .cluster))  + 
+p1 = agrupado %>% 
+    ggplot(aes(x = avaliacao, y = bilheteria, color = .cluster, label=filme))  + 
     geom_point(size = 3)+
     scale_y_log10()
 
-p2 = ggscatter(agrupado, x="avaliacao", y="bilheteria", color=".cluster")+
+ggscatter(agrupado, x="avaliacao", y="bilheteria", color=".cluster")+
     stat_chull(aes(fill = .cluster), alpha=0.3, geom="polygon")+
     xlab("Avaliação")+
     ylab("Bilheteria")
 
-ggplotly(p2)
+ggplotly(p1)
+
 
 ```
 
