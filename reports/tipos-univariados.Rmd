@@ -29,9 +29,7 @@ paleta = c("#404E4D",
 ```
 
 ```{r}
-## ANTES DE USAR
-# Para criar data/movies.csv
-import_data("scarlett_johansson") # ou com o ator/atriz que você escolher
+import_data("johnny_depp")
 ```
 
 
@@ -42,9 +40,13 @@ filmes = read_imported_data()
 ## Descrição
 
 ```{r}
-filmes %>% 
-    ggplot(aes(x = ano, y = bilheteria)) + 
-    geom_point(size = 4, color = paleta[1]) 
+
+p = filmes %>% 
+    ggplot(aes(x = ano, y = bilheteria, label=filme)) + 
+    geom_point(color = paleta[2], size = 4)
+
+ggplotly(p)
+
 ```
 
 
@@ -127,4 +129,5 @@ atribuicoes %>%
     labs(x = "", y = "Avaliação RT") + 
     coord_flip() 
 ```
+
 
