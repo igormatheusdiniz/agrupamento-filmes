@@ -1,8 +1,14 @@
 ---
-title: "Tipos de filme de FULANO(A)"
+title: "Tipos de filme de Johnny Depp"
+author: "Igor Matheus Castor Diniz Pinheiro"
 output:
     html_document:
-    df_print: paged
+        df_print: paged
+        toc: yes
+        toc_float: yes
+    html_notebook:
+        toc: yes
+        toc_float: yes
 theme: sandstone
 ---
 
