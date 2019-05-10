@@ -13,6 +13,7 @@ library(cluster)
 library(plotly)
 library(ggdendro)
 library(broom)
+library(ggpubr)
 
 source(here::here("code/lib.R"))
 theme_set(theme_report())
@@ -94,8 +95,10 @@ ggplotly(p2)
 
 ```{r}
 m_transformado = filmes %>% 
-    mutate(bilheteria_log = log10(bilheteria))
-summary(m_transformado %>% select(bilheteria_log, bilheteria))
+    mutate(bilheteria_log = as.vector(scale(log10(bilheteria))), 
+           avaliacao_scaled = as.vector(scale(avaliacao)))
+
+summary(m_transformado %>% select(bilheteria_log, avaliacao_scaled))
 ```
 
 ```{r}
@@ -112,7 +115,7 @@ plot_clusgap = function(clusgap, title = "Gap Statistic calculation results") {
 
 ```{r}
 gaps <- m_transformado %>% 
-    select(bilheteria_log, avaliacao) %>% 
+    select(bilheteria_log, avaliacao_scaled) %>% 
     clusGap(FUN = kmeans, nstart = 20, K.max = 8, B = 200)
 
 plot_clusgap(gaps)
@@ -123,27 +126,30 @@ n_clusters = 5
 
 # O agrupamento de fato:
 cluster = m_transformado %>% 
-    select(bilheteria_log, avaliacao) %>% 
+    select(bilheteria_log, avaliacao_scaled) %>% 
     kmeans(centers = n_clusters, nstart = 20)
 
 agrupado = cluster %>% 
     augment(m_transformado)
 
-p = agrupado %>% 
-    ggplot(aes(x = log10(avaliacao), y = bilheteria_log, color = .cluster))  + 
-    geom_point(size = 2)
+#p = agrupado %>% 
+#    ggplot(aes(x = avaliacao_scaled, y = bilheteria_log, color = .cluster))  + 
+#    geom_point(size = 3)
 
-ggplotly(p)
+agrupado %>% 
+    ggplot(aes(x = avaliacao, y = bilheteria, color = .cluster))  + 
+    geom_point(size = 3)+
+    scale_y_log10()
+
+p2 = ggscatter(agrupado, x="avaliacao", y="bilheteria", color=".cluster")+
+    stat_chull(aes(fill = .cluster), alpha=0.3, geom="polygon")+
+    xlab("Avaliação")+
+    ylab("Bilheteria")
+
+ggplotly(p2)
 
 ```
 
-```{r}
-p = filmes %>% 
-    ggplot(aes(x = "", y = bilheteria, label = filme)) + 
-    geom_jitter(width = .05, alpha = .3, size = 3)
-
-ggplotly(p)
-```
 
 
 
