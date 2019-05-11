@@ -130,6 +130,10 @@ ggplotly(p2)
 
 # Como posso agrupar os filmes do Depp em categorias?
 
+## Normalização das variáveis
+
+Para tentar agrupar os filmes em grupos, é importante perceber que as escalas de bilheteria e avaliação são bem diferentes. O espectro de bilheteria é bem maior que o espectro de avaliação. Isso pode gerar um agrupamento errado ou confuso. Logo o primeiro passo a ser feito é a normalização dos dados. 
+
 ```{r}
 m_transformado = filmes %>% 
     mutate(bilheteria_log = as.vector(scale(log10(bilheteria))), 
@@ -137,6 +141,10 @@ m_transformado = filmes %>%
 
 summary(m_transformado %>% select(bilheteria_log, avaliacao_scaled))
 ```
+
+## Em quantos grupos eu posso dividir minha base de dados ?
+
+Após os dados normalizados, podemos perceber que as escalas ficaram ao menos perto uma da outra, diferente de momentos anteriores. O próximo passo é decidir em quantos grupos executar o algoritimo de K-means, dependendo da escolha, os grupos podem não ser favorecidos. Para certificar de que se fez a melhor escolha de K, utilizou-se a função de "Gap Static Calculation", que basicamente retorna pra nós os desempenhos simulados de alguns Ks, e partir de então se torna decisão do usuário.
 
 ```{r}
 plot_clusgap = function(clusgap, title = "Gap Statistic calculation results") {
@@ -157,6 +165,8 @@ gaps <- m_transformado %>%
 
 plot_clusgap(gaps)
 ```
+
+Com a execução do Gap Statics é possível perceber que em 5 grupos temos um valor bastante interessante
 
 ```{r}
 set.seed(12345)
