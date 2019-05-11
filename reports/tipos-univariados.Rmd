@@ -166,7 +166,9 @@ gaps <- m_transformado %>%
 plot_clusgap(gaps)
 ```
 
-Com a execução do Gap Statics é possível perceber que em 5 grupos temos um valor bastante interessante
+## Agrupamento K-means
+
+Com a execução do Gap Statics é possível perceber que para um K igual 5 grupos temos um valor bastante interessante. Assumindo assim esse valor, executamos o algoritimo do k-means. Que retornar o resultado abaixo.
 
 ```{r}
 set.seed(12345)
@@ -200,6 +202,12 @@ ggplotly(p1)
 ```
 
 
+Podemos perceber a presença de 5 grupos de filmes do Johnny, vamos chama-lós de:
 
+* Capitão Jack Sparrow : Grupo em Azul.
+* Luz, Câmera, Fantasia e Animação: Grupo em Verde
+* Drama e Mistério: Grupo em Rosa
+* Dr. Will Caster: Grupo em Amarelo 
+* "Real"" History: Grupo em Vermelho
 
 
