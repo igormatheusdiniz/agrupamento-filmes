@@ -204,10 +204,14 @@ ggplotly(p1)
 
 Podemos perceber a presença de 5 grupos de filmes do Johnny, vamos chama-lós de:
 
-* Capitão Jack Sparrow : Grupo em Azul.
-* Luz, Câmera, Fantasia e Animação: Grupo em Verde
-* Drama e Mistério: Grupo em Rosa
-* Dr. Will Caster: Grupo em Amarelo 
-* "Real"" History: Grupo em Vermelho
+* Capitão Jack Sparrow : Grupo em Azul. Neste grupo é possível perceber que a maioria dos filmes é da frânquia Piratas do Caribe, que rendeu ao nosso ator gandes bilheterias, no papel do inusitado e querido Capitão Jack Sparrow.
+
+* Luz, Câmera, Fantasia e Animação: Grupo em Verde. Grandes filmes fantasiosos e animações são encontrados aqui ! Rango, foi uma animação que arrancou do público uma ENORME quantidade de avaliações extremamente positiva, numa escala de 0 a 100, sua avaliação foi de 88 pontos, mesmo não redendo uma grande bilheteria. Outro grande filme deste grupo é Charlie e a Fábrica de Chocolate, trata-se de uma recriação do filme A fantástica fábrica de Chocolate, e no papel do Ilustríssimo Willy Wonka, Depp atuou num mundo absurdamente fantasioso, alcançando um bilheteria bastante alta bem como Avaliação também. 
+
+* Drama e Mistério: Os filmes do grupo em Rosa são voltados mais para os genêros de Drama e Mistério, pode-se dizer que são filmes bem neutros, com avaliações bem na media e bilheterias semelhante.
+
+* Dr. Will Caster: Grupo em Amarelo. Estes filmes marcam a serie de "piores" filmes com particiáção do Johny Depp, com avaliações terriveis e bilheterias bem baixas, deixaram bastante a desejar. 
+
+* "Real"" History: Grupo em Vermelho. Este grupo possui filmes que contam histórias ou biógrafias, não são tão conhecidos e não renderam tanta bilheteria, mas possuem avaliações incríveis.
 
 
